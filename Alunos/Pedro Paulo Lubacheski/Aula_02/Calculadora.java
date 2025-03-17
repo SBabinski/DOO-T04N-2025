@@ -9,7 +9,7 @@ public class Calculadora {
         boolean menu = true;
 
         while (menu) {
-            System.out.println("[1] - Calcular Pre√ßo Total");
+            System.out.println("[1] - Calcular PreÁo Total");
             System.out.println("[2] - Calcular Troco");
             System.out.println("[3] - Sair");
 
@@ -26,7 +26,7 @@ public class Calculadora {
                     menu = false;
                     break;
                 default:
-                    System.out.println("Erro! Digite uma op√ß√£o v√°lida!");
+                    System.out.println("Erro! Digite uma opÁ„o v·lida!");
             }
         }
     }
@@ -34,12 +34,12 @@ public class Calculadora {
     public static void precoTotal() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite o pre√ßo do produto: ");
+        System.out.println("Digite o preÁo do produto: ");
         double preco = scanner.nextDouble();
         System.out.println("Digite a quantidade de produtos: ");
         int quantidade = scanner.nextInt();
         double total = preco * quantidade;
-        System.out.println("O pre√ßo total √©: " + total);
+        System.out.println("O preÁo total È: " + total);
     }
 
     public static void troco() {
@@ -50,6 +50,6 @@ public class Calculadora {
         System.out.println("Digite o valor pago: ");
         double pago = scanner.nextDouble();
         double troco = pago - valor;
-        System.out.println("O troco √©: " + troco);
+        System.out.println("O troco È: " + troco);
     }
 }
