@@ -1,0 +1,106 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Venda {
+    private int quantidade;
+    private double valorTotal;
+    private double descontoAplicado;
+
+    public Venda(int quantidade, double valorTotal, double descontoAplicado) {
+        this.quantidade = quantidade;
+        this.valorTotal = valorTotal;
+        this.descontoAplicado = descontoAplicado;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public double getDescontoAplicado() {
+        return descontoAplicado;
+    }
+
+    @Override
+    public String toString() {
+        return "Quantidade: " + quantidade + ", Valor Total: R$" + valorTotal + ", Desconto: R$" + descontoAplicado;
+    }
+}
+
+public class Main {
+    private static List<Venda> registrosDeVendas = new ArrayList<>();
+    
+    public static double calcularValorComDesconto(int quantidade, double precoUnitario) {
+        double valorTotal = quantidade * precoUnitario;
+        if (quantidade > 10) {
+            double desconto = valorTotal * 0.05; // 5% de desconto
+            valorTotal -= desconto;
+            System.out.println("Desconto de 5% aplicado! Desconto: R$" + desconto);
+        }
+        return valorTotal;
+    }
+
+    public static void registrarVenda(int quantidade, double valorTotal, double descontoAplicado) {
+        Venda novaVenda = new Venda(quantidade, valorTotal, descontoAplicado);
+        registrosDeVendas.add(novaVenda);
+    }
+
+    public static void exibirMenu() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Registrar nova venda");
+            System.out.println("2. Exibir registros de vendas");
+            System.out.println("3. Sair");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite a quantidade de plantas: ");
+                    int quantidade = scanner.nextInt();
+                    System.out.print("Digite o preço da planta: R$");
+                    double precoUnitario = scanner.nextDouble();
+
+                    double valorTotal = calcularValorComDesconto(quantidade, precoUnitario);
+
+    
+                    registrarVenda(quantidade, valorTotal, valorTotal - (quantidade * precoUnitario));
+
+                    System.out.println("Venda registrada com sucesso!");
+                    break;
+
+                case 2:
+   
+                    if (registrosDeVendas.isEmpty()) {
+                        System.out.println("Nenhuma venda registrada.");
+                    } else {
+                        System.out.println("\nRegistros de Vendas:");
+                        for (Venda venda : registrosDeVendas) {
+                            System.out.println(venda);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Saindo do sistema...");
+                    return;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        exibirMenu();
+    }
+}
+ 
