@@ -1,0 +1,44 @@
+Paradigmas de Programação: Imperativo vs Declarativo
+
+Os paradigmas de programação representam diferentes abordagens para resolver problemas computacionais. Dois dos principais paradigmas são:
+
+Paradigma Imperativo: Baseia-se em instruções sequenciais que modificam o estado do programa ao longo do tempo. Linguagens como Java, C e Python adotam esse estilo, no qual o desenvolvedor descreve explicitamente o passo a passo da solução.
+
+Paradigma Declarativo: Foca no que deve ser feito, em vez de como fazê-lo. Prolog, SQL e Haskell são exemplos de linguagens declarativas, onde o código expressa relações e regras sem definir explicitamente a ordem de execução.
+
+A seguir, comparamos dois trechos de código, um em Java (imperativo) e outro em Prolog (declarativo), que têm o mesmo objetivo: verificar se um número é par.
+
+Exemplo em Java (Imperativo)
+
+public class Paridade {
+    public static boolean ehPar(int numero) {
+        return numero % 2 == 0;
+    }
+    
+    public static void main(String[] args) {
+        int num = 4;
+        System.out.println("O número " + num + " é par? " + ehPar(num));
+    }
+}
+
+Descrição: O código define uma função ehPar que recebe um número inteiro, verifica se o resto da divisão por 2 é zero e retorna true ou false. A função main instancia um número e imprime o resultado na tela.
+
+Exemplo em Prolog (Declarativo)
+
+eh_par(N) :- N mod 2 =:= 0.
+
+Descrição: O código define uma regra eh_par/1 que verifica se N é par. Em Prolog, essa definição estabelece um fato lógico sem especificar um fluxo de execução explícito. Para testar, basta consultar eh_par(4)., e o interpretador responderá true ou false.
+
+Comparação
+
+Controle de Fluxo: No Java, o controle de execução é explícito, com chamadas de funções e retornos. No Prolog, a lógica é declarada como regras e fatos, e o motor de inferência da linguagem decide como avaliá-los.
+
+Estado: No código Java, há variáveis que armazenam estado (como num). Em Prolog, a computação ocorre por meio de unificação e backtracking, sem a necessidade de alterar estados.
+
+Legibilidade: O código em Java pode ser mais intuitivo para quem já está acostumado com programação imperativa, enquanto Prolog favorece expressividade em problemas baseados em lógica e inferência.
+
+Conclusão
+
+Ambos os paradigmas têm vantagens e desvantagens. O paradigma imperativo oferece controle detalhado sobre a execução, enquanto o declarativo pode ser mais expressivo e conciso para problemas específicos, como lógica e bancos de dados. A escolha entre um e outro depende do contexto e das necessidades do problema a ser resolvido.
+
+
