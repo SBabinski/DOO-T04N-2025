@@ -1,0 +1,135 @@
+package gabrielinha;
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Vendedor {
+    String nome;
+    int idade;
+    Loja loja;
+    String cidade;
+    String bairro;
+    String rua;
+    double salarioBase;
+    double[] salarioRecebido = {2000.0, 2100.0, 2200.0};
+
+    public Vendedor(String nome, int idade, Loja loja, String cidade, String bairro, String rua, double salarioBase) {
+        this.nome = nome;
+        this.idade = idade;
+        this.loja = loja;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.salarioBase = salarioBase;
+    }
+
+    public void apresentarse() {
+        System.out.println("Nome: " + nome + " | Idade: " + idade + " | Loja: " + loja.nomeFantasia);
+    }
+
+    public double calcularMedia() {
+        double soma = 0;
+        for (double salario : salarioRecebido) {
+            soma += salario;
+        }
+        return soma / salarioRecebido.length;
+    }
+
+    public double calcularBonus() {
+        return salarioBase * 0.2;
+    }
+}
+
+class Cliente {
+    String nome;
+    int idade;
+    String cidade;
+    String bairro;
+    String rua;
+
+    public Cliente(String nome, int idade, String cidade, String bairro, String rua) {
+        this.nome = nome;
+        this.idade = idade;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+    }
+
+    public void apresentarse() {
+        System.out.println("Nome: " + nome + " | Idade: " + idade);
+    }
+}
+
+class Loja {
+    String nomeFantasia;
+    String razaoSocial;
+    String cnpj;
+    String cidade;
+    String bairro;
+    String rua;
+    List<Vendedor> vendedores = new ArrayList<>();
+    List<Cliente> clientes = new ArrayList<>();
+
+    public Loja(String nomeFantasia, String razaoSocial, String cnpj, String cidade, String bairro, String rua) {
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+    }
+
+    public void adicionaVendedor(Vendedor v) {
+        vendedores.add(v);
+    }
+
+    public void adicionaCliente(Cliente c) {
+        clientes.add(c);
+    }
+
+    public void contarClientes() {
+        System.out.println("Total de clientes: " + clientes.size());
+    }
+
+    public void contarVendedores() {
+        System.out.println("Total de vendedores: " + vendedores.size());
+    }
+
+    public void apresentarse() {
+        System.out.println("Loja: " + nomeFantasia + " | CNPJ: " + cnpj + " | Endereço: " + rua + ", " + bairro + ", " + cidade);
+    }
+}
+
+public class melhoria03 {
+    public static void main(String[] args) {
+        Loja loja = new Loja("My Plant", "My Plant Ltda.", "00.000.000/0001-00", "Centro", "Jardim Central", "Rua das Flores");
+
+        Vendedor v1 = new Vendedor("João", 30, loja, "Centro", "Jardim Central", "Rua A", 2000.0);
+        Vendedor v2 = new Vendedor("Ana", 28, loja, "Centro", "Jardim Central", "Rua B", 2100.0);
+
+        Cliente c1 = new Cliente("Carlos", 40, "Centro", "Jardim Central", "Rua C");
+        Cliente c2 = new Cliente("Maria", 35, "Centro", "Jardim Central", "Rua D");
+
+        loja.adicionaVendedor(v1);
+        loja.adicionaVendedor(v2);
+
+        loja.adicionaCliente(c1);
+        loja.adicionaCliente(c2);
+
+        loja.apresentarse();
+        loja.contarClientes();
+        loja.contarVendedores();
+
+        System.out.println();
+        v1.apresentarse();
+        System.out.printf("Média Salarial: R$ %.2f | Bônus: R$ %.2f%n", v1.calcularMedia(), v1.calcularBonus());
+
+        System.out.println();
+        v2.apresentarse();
+        System.out.printf("Média Salarial: R$ %.2f | Bônus: R$ %.2f%n", v2.calcularMedia(), v2.calcularBonus());
+
+        System.out.println();
+        c1.apresentarse();
+        c2.apresentarse();
+    }
+}
