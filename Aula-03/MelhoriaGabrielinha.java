@@ -1,0 +1,129 @@
+package aula03;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Venda {
+    private int quantidade;
+    private double valorTotal;
+    private double descontoAplicado;
+
+    public Venda(int quantidade, double valorTotal, double descontoAplicado) {
+        this.quantidade = quantidade;
+        this.valorTotal = valorTotal;
+        this.descontoAplicado = descontoAplicado;
+    }
+
+    @Override
+    public String toString() {
+        return "Quantidade: " + quantidade + ", Valor Total: R$ " + String.format("%.2f", valorTotal) + ", Desconto: R$ " + String.format("%.2f", descontoAplicado);
+    }
+}
+
+public class MelhoriaGabrielinha {
+    private static final double DESCONTO_PERCENTUAL = 0.05;
+    private static final int QUANTIDADE_MIN_DESCONTO = 10;
+    private static List<Venda> registroVendas = new ArrayList<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        while (true) {
+            System.out.println("\n--- Menu ---");
+            System.out.println("1 - Calcular Preço Total");
+            System.out.println("2 - Calcular Troco");
+            System.out.println("3 - Exibir Registro de Vendas");
+            System.out.println("4 - Sair");
+            System.out.print("Escolha uma opção: ");
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Entrada inválida! Por favor, insira um número de 1 a 4.");
+                scanner.next();
+                continue;
+            }
+
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    calcularPrecoTotal(scanner);
+                    break;
+                case 2:
+                    calcularTroco(scanner);
+                    break;
+                case 3:
+                    exibirRegistroVendas();
+                    break;
+                case 4:
+                    System.out.println("Saindo... Obrigado por utilizar a calculadora!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Opção inválida! Escolha um número entre 1 e 4.");
+            }
+        }
+    }
+
+    private static void calcularPrecoTotal(Scanner scanner) {
+        System.out.print("Digite a quantidade da planta: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Por favor, insira um número válido.");
+            scanner.next();
+        }
+        int quantidade = scanner.nextInt();
+
+        System.out.print("Digite o preço unitário da planta: ");
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Por favor, insira um valor numérico válido.");
+            scanner.next();
+        }
+        double precoUnitario = scanner.nextDouble();
+
+        double total = quantidade * precoUnitario;
+        double desconto = 0;
+
+        if (quantidade > QUANTIDADE_MIN_DESCONTO) {
+            desconto = total * DESCONTO_PERCENTUAL;
+            total -= desconto;
+        }
+
+        System.out.printf("Preço total da compra: R$ %.2f%n", total);
+        if (desconto > 0) {
+            System.out.printf("Desconto aplicado: R$ %.2f%n", desconto);
+        }
+
+        registroVendas.add(new Venda(quantidade, total, desconto));
+    }
+
+    private static void calcularTroco(Scanner scanner) {
+        System.out.print("Digite o valor recebido: ");
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Por favor, insira um valor numérico válido.");
+            scanner.next();
+        }
+        double valorRecebido = scanner.nextDouble();
+
+        System.out.print("Digite o valor total da compra: ");
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Por favor, insira um valor numérico válido.");
+            scanner.next();
+        }
+        double valorCompra = scanner.nextDouble();
+
+        double troco = valorRecebido - valorCompra;
+        System.out.printf("Troco a ser dado: R$ %.2f%n", troco);
+    }
+
+    private static void exibirRegistroVendas() {
+        if (registroVendas.isEmpty()) {
+            System.out.println("Nenhuma venda registrada.");
+        } else {
+            System.out.println("\n--- Registro de Vendas ---");
+            for (Venda venda : registroVendas) {
+                System.out.println(venda);
+            }
+        }
+    }
+}

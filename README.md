@@ -1,1 +1,0 @@
-Sejam bem vindos.
