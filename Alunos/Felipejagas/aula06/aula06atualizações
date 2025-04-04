@@ -1,0 +1,136 @@
+class Vendedor {
+    private String nome;
+    private int idade;
+    private String loja;
+    private String cidade;
+    private String bairro;
+    private String rua;
+    private double salarioBase;
+    private double[] salarioRecebido;
+
+    public Vendedor(String nome, int idade, String loja, String cidade, String bairro, String rua, double salarioBase) {
+        this.nome = nome;
+        this.idade = idade;
+        this.loja = loja;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.salarioBase = salarioBase;
+        this.salarioRecebido = new double[] {salarioBase, salarioBase * 1.1, salarioBase * 1.2};
+    }
+
+    public void apresentarse() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade);
+        System.out.println("Loja: " + loja);
+    }
+
+    public double calcularMedia() {
+        double soma = 0;
+        for (double salario : salarioRecebido) {
+            soma += salario;
+        }
+        return soma / salarioRecebido.length;
+    }
+
+    public double calcularBonus() {
+        return salarioBase * 0.2;
+    }
+}
+
+class Cliente {
+    private String nome;
+    private int idade;
+    private String cidade;
+    private String bairro;
+    private String rua;
+
+    public Cliente(String nome, int idade, String cidade, String bairro, String rua) {
+        this.nome = nome;
+        this.idade = idade;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+    }
+
+    public void apresentarse() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade);
+    }
+}
+
+import java.util.ArrayList;
+
+class Loja {
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String cnpj;
+    private String cidade;
+    private String bairro;
+    private String rua;
+    private ArrayList<Vendedor> vendedores;
+    private ArrayList<Cliente> clientes;
+
+    public Loja(String nomeFantasia, String razaoSocial, String cnpj, String cidade, String bairro, String rua) {
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.vendedores = new ArrayList<>();
+        this.clientes = new ArrayList<>();
+    }
+
+    public void adicionarVendedor(Vendedor vendedor) {
+        vendedores.add(vendedor);
+    }
+
+    public void adicionarCliente(Cliente cliente) {
+        clientes.add(cliente);
+    }
+
+    public int contarClientes() {
+        return clientes.size();
+    }
+
+    public int contarVendedores() {
+        return vendedores.size();
+    }
+
+    public void apresentarse() {
+        System.out.println("Nome Fantasia: " + nomeFantasia);
+        System.out.println("CNPJ: " + cnpj);
+        System.out.println("Endereço: " + rua + ", " + bairro + ", " + cidade);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Vendedor vendedor1 = new Vendedor("Carlos", 30, "My Plant", "São Paulo", "Centro", "Rua das Flores", 3000);
+        Vendedor vendedor2 = new Vendedor("Ana", 28, "My Plant", "São Paulo", "Centro", "Rua das Flores", 3200);
+
+        Cliente cliente1 = new Cliente("João", 40, "São Paulo", "Centro", "Rua das Flores");
+        Cliente cliente2 = new Cliente("Maria", 35, "São Paulo", "Centro", "Rua das Flores");
+
+        Loja loja = new Loja("My Plant", "My Plant Ltda", "12345678000195", "São Paulo", "Centro", "Rua das Flores");
+
+        loja.adicionarVendedor(vendedor1);
+        loja.adicionarVendedor(vendedor2);
+        loja.adicionarCliente(cliente1);
+        loja.adicionarCliente(cliente2);
+
+        loja.apresentarse();
+        
+        System.out.println("Quantidade de Clientes: " + loja.contarClientes());
+        System.out.println("Quantidade de Vendedores: " + loja.contarVendedores());
+
+        vendedor1.apresentarse();
+        System.out.println("Média de Salário: " + vendedor1.calcularMedia());
+        System.out.println("Bônus: " + vendedor1.calcularBonus());
+        
+        vendedor2.apresentarse();
+        System.out.println("Média de Salário: " + vendedor2.calcularMedia());
+        System.out.println("Bônus: " + vendedor2.calcularBonus());
+    }
+}
