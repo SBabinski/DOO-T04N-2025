@@ -1,21 +1,21 @@
 package Utils;
 
-import src.Entities.Budget;
+import src.Entities.Order.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Stack {
-    private final List<Budget> budgets;
+    private final List<Order> orders;
 
     public Stack() {
-        this.budgets = new ArrayList<>();
+        this.orders = new ArrayList<>();
     }
 
-    public void addBudget(Budget budget) {
-        this.budgets.add(budget);
+    public void addBudget(Order order) {
+        this.orders.add(order);
     }
-    public List<Budget> GetBudgets() {
-        return this.budgets;
+    public List<Order> GetBudgets() {
+        return this.orders;
     }
 }

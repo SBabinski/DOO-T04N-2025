@@ -1,0 +1,61 @@
+Paradigmas de Programação: Imperativo vs. Declarativo
+Na programação, existem diferentes formas de estruturar o código e resolver problemas. Dois dos paradigmas mais comuns são o imperativo e o declarativo, e a principal diferença entre eles está na abordagem adotada para encontrar a solução.
+
+Enquanto o paradigma imperativo foca em como a tarefa deve ser executada, o declarativo se concentra no que precisa ser feito, deixando os detalhes da execução para o próprio sistema.
+
+Paradigma Imperativo
+O paradigma imperativo é baseado em uma sequência de instruções que devem ser seguidas passo a passo. Ele exige que o programador controle explicitamente o estado do programa e o fluxo da execução.
+
+Linguagens como Java, C e Python são majoritariamente imperativas, pois nelas o código precisa detalhar exatamente como a solução será alcançada.
+
+Características do paradigma imperativo:
+Define claramente como resolver o problema.
+
+Modifica estados ao longo da execução.
+
+Usa estruturas de controle como loops e condicionais.
+
+Exemplo em Java (Imperativo)
+java
+Copiar
+Editar
+public class Parentesco {
+    public static boolean saoParentes(String pessoa1, String pessoa2) {
+        if ((pessoa1.equals("João") && pessoa2.equals("Maria")) || 
+            (pessoa1.equals("Maria") && pessoa2.equals("João"))) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(saoParentes("João", "Maria"));
+    }
+}
+Analisando o código:
+Aqui, seguimos uma abordagem bem explícita: definimos um método saoParentes que verifica manualmente se duas pessoas são parentes com base em comparações diretas. O controle do fluxo e da lógica é todo feito pelo programador.
+
+Paradigma Declarativo
+Já o paradigma declarativo segue um caminho diferente. Em vez de detalhar cada passo da execução, ele permite que o programador apenas descreva o que precisa ser resolvido.
+
+Linguagens como Prolog, SQL e Haskell são exemplos típicos desse paradigma. Aqui, o foco é declarar as regras e relações, e o sistema se encarrega de descobrir a solução.
+
+Características do paradigma declarativo:
+Define o que precisa ser resolvido, sem se preocupar com os passos.
+
+Não controla explicitamente o fluxo de execução.
+
+Menos detalhamento sobre como o estado muda.
+
+Exemplo em Prolog (Declarativo)
+prolog
+Copiar
+Editar
+parentesco(joao, maria).
+parentesco(maria, joao).
+
+main :- 
+    parentesco(joao, maria),
+    write('São parentes!').
+Analisando o código:
+Aqui, não há condições ou fluxos de controle manuais. Apenas declaramos os fatos (joao e maria são parentes) e deixamos o Prolog cuidar da lógica. Quando perguntamos parentesco(joao, maria), o sistema já sabe o que fazer.

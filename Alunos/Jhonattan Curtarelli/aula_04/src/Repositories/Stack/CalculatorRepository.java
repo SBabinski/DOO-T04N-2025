@@ -1,7 +1,7 @@
 package src.Repositories.Stack;
 
 import Utils.Stack;
-import src.Entities.Budget;
+import src.Entities.Order.Order;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,13 +14,13 @@ public class CalculatorRepository implements src.Interfaces.ICalculatorRepositor
         this.stack = new Stack();
     }
     @Override
-    public boolean SaveBudget(Budget budget) {
-        this.stack.addBudget(budget);
+    public boolean SaveBudget(Order order) {
+        this.stack.addBudget(order);
         return true;
     }
 
     @Override
-    public List<Budget> GetBudgets() {
+    public List<Order> GetBudgets() {
         return stack.GetBudgets();
     }
     @Override
