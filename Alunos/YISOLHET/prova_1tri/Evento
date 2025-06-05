@@ -1,0 +1,58 @@
+package eventos;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Evento {
+	
+		protected String nome;
+	    protected LocalDate dataInicio;
+	    protected LocalDate dataFim;
+	    protected double precoDiario;
+	    protected int capacidadeMaxima;
+	    protected List<ingresso> ingressosVendidos;
+
+	    public Evento(String nome, LocalDate dataInicio, LocalDate dataFim, double precoDiario, int capacidadeMaxima) {
+	        this.nome = nome;
+	        this.dataInicio = dataInicio;
+	        this.dataFim = dataFim;
+	        this.precoDiario = precoDiario;
+	        this.capacidadeMaxima = capacidadeMaxima;
+	        this.ingressosVendidos = new ArrayList<>();
+
+	    }
+	    public long getDuracaoDias() {
+	        return dataFim.toEpochDay() - dataInicio.toEpochDay() + 1;
+	    }
+
+	    public double calcularPrecoIngresso(boolean vip) {
+	        double base = precoDiario * getDuracaoDias();
+	        if (vip) base *= 1.5;
+	        return base;
+	    }
+	    
+	    public boolean temDisponibilidade(boolean vip) {
+	        long vendidos = ingressosVendidos.stream().filter(i -> i.isVip() == vip).count();
+	        if (vip) {
+	            return vendidos < (capacidadeMaxima * 0.1);
+	        }
+	        return (ingressosVendidos.size() - vendidos) < (capacidadeMaxima * 0.9);
+	    }
+	    
+	    public void venderIngresso(ingresso ingresso) {
+	        if (ingressosVendidos.size() < capacidadeMaxima) {
+	            ingressosVendidos.add(ingresso);
+	        }
+	    }
+
+	    public List<ingresso> getIngressosVendidos() {
+	        return ingressosVendidos;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return nome + " (" + dataInicio + " a " + dataFim + ") - R$" + precoDiario + "/dia";
+	    }
+		protected abstract String getNome();
+}

@@ -1,0 +1,29 @@
+package eventos;
+
+import java.time.LocalDate;
+
+public class Congresso extends Evento {
+
+	public Congresso(String nome, LocalDate dataInicio, LocalDate dataFim, double precoDiario, int capacidadeMaxima) {
+		super(nome, dataInicio, dataFim, precoDiario, capacidadeMaxima);
+		
+	}
+	
+	 @Override
+	    public boolean temDisponibilidade(boolean vip) {
+	        return ingressosVendidos.size() < capacidadeMaxima;
+	    }
+
+	    @Override
+	    public double calcularPrecoIngresso(boolean vip) {
+	        return precoDiario * getDuracaoDias();
+	    }
+
+		@Override
+		protected String getNome() {
+			return null;
+		}
+	    
+	    
+	}
+	

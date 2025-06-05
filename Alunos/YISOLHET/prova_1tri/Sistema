@@ -1,0 +1,50 @@
+package eventos;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Sistema {
+	
+	private List<Cliente> clientes= new ArrayList<>();
+	private List<Evento> eventos= new  ArrayList<>();   
+	
+	 public void cadastrarCliente(String nome, String email) {
+	        clientes.add(new Cliente(nome, email));
+	    }
+	 
+	 public void cadastrarShow(String nome, LocalDate inicio, LocalDate fim, double preco, int capacidade) {
+	        eventos.add(new Show(nome, inicio, fim, preco, capacidade));
+	    }
+	 
+	 public void cadastrarCongresso(String nome, LocalDate inicio, LocalDate fim, double preco, int capacidade) {
+	        eventos.add(new Congresso(nome, inicio, fim, preco, capacidade));
+	    }
+	 
+	 public List<Evento> listarEventos() {
+	        return eventos;
+	    }
+	 public boolean comprarIngresso(String email, String nomeEvento, boolean vip) {
+	        Cliente cliente = clientes.stream().filter(c -> c.getEmail().equals(email)).findFirst().orElse(null);
+	        Evento evento = eventos.stream().filter(e -> e.getNome().equals(nomeEvento)).findFirst().orElse(null);
+
+	        if (cliente == null || evento == null) return false;
+	        if (!evento.temDisponibilidade(vip)) return false;
+
+	       ingresso ingresso = new ingresso();
+	        evento.venderIngresso(ingresso);
+	        return true;
+	    }
+
+	    public boolean utilizarIngresso(String email, String nomeEvento) {
+	        for (Evento evento : eventos) {
+	            for(ingresso ingresso : evento.getIngressosVendidos()) {
+	                if (ingresso.toString().contains(email) && ingresso.toString().contains(nomeEvento) && !ingresso.isUtilizado()) {
+	                    ingresso.utilizar();
+	                    return true;
+	                }
+	            }
+	        }
+	        return false;
+	    }
+	}

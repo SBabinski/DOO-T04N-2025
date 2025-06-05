@@ -1,0 +1,60 @@
+[
+    {
+        code USD,
+        codein BRL,
+        name Dólar AmericanoReal Brasileiro,
+        high 5.1764,
+        low 5.1304,
+        varBid 0.0207,
+        pctChange 0.4,
+        bid 5.1645,
+        ask 5.1652,
+        timestamp 1716584393,
+        create_date 2024-05-24 175953
+    },
+    {
+        high 5.1764,
+        low 5.1304,
+        varBid 0.0242,
+        pctChange 0.47,
+        bid 5.168,
+        ask 5.1687,
+        timestamp 1716584346
+    },
+    {
+        high 5.1451,
+        low 5.141,
+        varBid 0.0004,
+        pctChange 0.01,
+        bid 5.1442,
+        ask 5.145,
+        timestamp 1716508720
+    },
+    {
+        high 5.155,
+        low 5.1495,
+        varBid 0.0013,
+        pctChange 0.02,
+        bid 5.1511,
+        ask 5.152,
+        timestamp 1716413366
+    },
+    {
+        high 5.1251,
+        low 5.122,
+        varBid 0.0004,
+        pctChange 0.01,
+        bid 5.1225,
+        ask 5.1232,
+        timestamp 1716335940
+    },
+    {
+        high 5.1052,
+        low 5.1032,
+        varBid 0.0012,
+        pctChange 0.02,
+        bid 5.104,
+        ask 5.105,
+        timestamp 1716247433
+    }
+]

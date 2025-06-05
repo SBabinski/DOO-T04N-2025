@@ -1,0 +1,227 @@
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+public class MyPlantSystem {
+
+    public static void main(String[] args) {
+        Endereco enderecoCliente = new Endereco("São Paulo", "Centro", "Rua Principal", "123", "Apto 45");
+        Cliente cliente = new Cliente("Maria Silva", 30, enderecoCliente, "maria@email.com");
+
+        Endereco enderecoVendedor = new Endereco("São Paulo", "Centro", "Rua Principal", "123", "Apto 45");
+        Vendedor vendedor = new Vendedor("João Souza", 25, enderecoVendedor, "Loja A", 2000);
+
+        Item item1 = new Item(1, "Produto A", "Eletrônico", 100);
+        Item item2 = new Item(2, "Produto B", "Vestuário", 50);
+        List<Item> itens = new ArrayList<>();
+        itens.add(item1);
+        itens.add(item2);
+
+        ProcessaPedido processador = new ProcessaPedido();
+        processador.processar(cliente, vendedor, "Loja A", itens);
+
+        List<Double> salariosGerente = new ArrayList<>();
+        salariosGerente.add(5000.0);
+        salariosGerente.add(5500.0);
+        salariosGerente.add(6000.0);
+        Endereco enderecoGerente = new Endereco("Rio de Janeiro", "Copacabana", "Av. Atlântica", "1234", "Cobertura");
+        Gerente gerente = new Gerente("Carlos Pereira", 40, enderecoGerente, "Loja B", 8000.0, salariosGerente);
+        gerente.apresentarSe();
+        System.out.println("Média salarial: " + gerente.calcularMedia());
+        System.out.println("Bônus: " + gerente.calcularBonus());
+    }
+}
+
+class Pessoa {
+    private String nome;
+    private int idade;
+    private Endereco endereco;
+
+    public Pessoa(String nome, int idade, Endereco endereco) {
+        this.nome = nome;
+        this.idade = idade;
+        this.endereco = endereco;
+    }
+
+    public void apresentarSe() {
+        System.out.println("Nome: " + nome + ", Idade: " + idade);
+    }
+}
+
+class Vendedor extends Pessoa {
+    private String loja;
+    private double salarioBase;
+
+    public Vendedor(String nome, int idade, Endereco endereco, String loja, double salarioBase) {
+        super(nome, idade, endereco);
+        this.loja = loja;
+        this.salarioBase = salarioBase;
+    }
+
+    @Override
+    public void apresentarSe() {
+        super.apresentarSe();
+        System.out.println("Loja: " + loja);
+    }
+}
+
+class Cliente extends Pessoa {
+    private String email;
+
+    public Cliente(String nome, int idade, Endereco endereco, String email) {
+        super(nome, idade, endereco);
+        this.email = email;
+    }
+
+    @Override
+    public void apresentarSe() {
+        super.apresentarSe();
+        System.out.println("Email: " + email);
+    }
+}
+
+class Endereco {
+    private String estado;
+    private String cidade;
+    private String bairro;
+    private String rua;
+    private String numero;
+    private String complemento;
+
+    public Endereco(String estado, String cidade, String bairro, String rua, String numero, String complemento) {
+        this.estado = estado;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+    }
+
+    public void apresentarLogradouro() {
+        String enderecoCompleto = rua + ", " + bairro + ", " + cidade;
+        if (numero != null) {
+            enderecoCompleto += ", " + numero;
+        }
+        if (complemento != null) {
+            enderecoCompleto += " (" + complemento + ")";
+        }
+        System.out.println(enderecoCompleto);
+    }
+}
+
+class Item {
+    private int id;
+    private String nome;
+    private String tipo;
+    private double valor;
+
+    public Item(int id, String nome, String tipo, double valor) {
+        this.id = id;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.valor = valor;
+    }
+
+    public void gerarDescricao() {
+        System.out.println("ID: " + id + ", Nome: " + nome + ", Tipo: " + tipo + ", Valor: " + valor);
+    }
+}
+
+class Pedido {
+    private int id;
+    private Date dataCriacao;
+    private Date dataPagamento;
+    private Date dataVencimentoReserva;
+    private Cliente cliente;
+    private Vendedor vendedor;
+    private String loja;
+    private List<Item> itens;
+
+    public Pedido(int id, Date dataCriacao, Date dataPagamento, Date dataVencimentoReserva, Cliente cliente, Vendedor vendedor, String loja, List<Item> itens) {
+        this.id = id;
+        this.dataCriacao = dataCriacao;
+        this.dataPagamento = dataPagamento;
+        this.dataVencimentoReserva = dataVencimentoReserva;
+        this.cliente = cliente;
+        this.vendedor = vendedor;
+        this.loja = loja;
+        this.itens = itens;
+    }
+
+    public double calcularValorTotal() {
+        return itens.stream().mapToDouble(Item::getValor).sum();
+    }
+
+    public void gerarDescricaoVenda() {
+        System.out.println("Data de criação: " + dataCriacao + ", Valor total: " + calcularValorTotal());
+    }
+
+    public void setDataPagamento(Date dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public Date getDataVencimentoReserva() {
+        return dataVencimentoReserva;
+    }
+}
+
+class ProcessaPedido {
+    public Pedido processar(Cliente cliente, Vendedor vendedor, String loja, List<Item> itens) {
+        int id = 1;
+        Date dataCriacao = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dataCriacao);
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        Date dataVencimentoReserva = calendar.getTime();
+
+        Pedido pedido = new Pedido(id, dataCriacao, null, dataVencimentoReserva, cliente, vendedor, loja, itens);
+        if (confirmarPagamento(pedido)) {
+            pedido.setDataPagamento(new Date());
+            pedido.gerarDescricaoVenda();
+            return pedido;
+        } else {
+            System.out.println("Reserva expirada. Pedido cancelado.");
+            return null;
+        }
+    }
+
+    private boolean confirmarPagamento(Pedido pedido) {
+        return new Date().compareTo(pedido.getDataVencimentoReserva()) <= 0;
+    }
+}
+
+class Gerente extends Pessoa {
+    private String loja;
+    private double salarioBase;
+    private List<Double> salariosRecebidos;
+
+    public Gerente(String nome, int idade, Endereco endereco, String loja, double salarioBase, List<Double> salariosRecebidos) {
+        super(nome, idade, endereco);
+        this.loja = loja;
+        this.salarioBase = salarioBase;
+        this.salariosRecebidos = salariosRecebidos;
+    }
+
+    @Override
+    public void apresentarSe() {
+        super.apresentarSe();
+        System.out.println("Loja: " + loja);
+    }
+
+    public double calcularMedia() {
+        return salariosRecebidos.stream().mapToDouble(Double::doubleValue).average().orElse(0);
+    }
+
+    public double calcularBonus() {
+        return salarioBase * 0.35;
+    }
+
+    public void adicionarSalario(double salario) {
+        this.salariosRecebidos.add(salario);
+    }
+
+    public List<Double> getSalariosRecebidos() {
+        return salariosRecebidos;
+    }
+}

@@ -1,5 +1,5 @@
 import Utils.Stack;
-import src.Entities.Budget;
+import src.Entities.Order.Order;
 import src.Services.Calculator;
 
 import java.math.BigDecimal;
@@ -22,12 +22,12 @@ public class CalculadoraPlantas {
         BigDecimal price = sc.nextBigDecimal();
         sc.nextLine();
         LocalDate date = GetDate();
-        Budget budget = new Budget(price, quantity, date);
+        Order order = new Order(price, quantity, date);
         BigDecimal totalPrice = this.calculator.CalculateTotalPrice(
-            budget
+                order
         );
 
-        System.out.println("Quantidade: " + quantity + " Preço: " + price + " Data: " + budget.getDate());
+        System.out.println("Quantidade: " + quantity + " Preço: " + price + " Data: " + order.getDate());
         System.out.println(
                 "O Preço total é: R$ " +
                         totalPrice
@@ -48,15 +48,15 @@ public class CalculadoraPlantas {
     public void GetBudgetsHistory()
     {
         try{
-            List<Budget> budgets = this.calculator.GetBudgetsHistory();
+            List<Order> orders = this.calculator.GetBudgetsHistory();
             System.out.println("Histórico de orçamentos");
-            for (Budget budget : budgets)
+            for (Order order : orders)
             {
                 System.out.println(
-                        "Quantidade: " + budget.items +
-                                " Preço: R$ " + budget.getValue() +
-                                " Total: R$ " + budget.total +
-                        " Data: " + budget.getDate()
+                        "Quantidade: " + order.items +
+                                " Preço: R$ " + order.getValue() +
+                                " Total: R$ " + order.total +
+                        " Data: " + order.getDate()
                 );
             }
         }

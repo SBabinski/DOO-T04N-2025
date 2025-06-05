@@ -1,0 +1,81 @@
+package eventos;
+
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Sistema sistema = new Sistema();
+		Scanner scanner = new Scanner(System.in);
+		int opcao;
+		
+		
+		do {
+			System.out.println("[1]- Cadastrar Cliente");
+			System.out.println("[2]- Cadastrar Show");
+			System.out.println("[3]- Cadastrar Congresso");
+			System.out.println("[4]- Listar Evento");
+			System.out.println("[5]- Comprar ingresso");
+			System.out.println("[6]- utilizar ingresso");
+			System.out.println("[0]- sair");
+			System.out.println("Escolha uma das opcoes");
+			opcao = scanner.nextInt();
+			scanner.nextLine();		
+			
+
+            switch (opcao) {
+                case 1 -> {
+                    System.out.print("Nome: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
+                    sistema.cadastrarCliente(nome, email);
+                }
+                case 2, 3 -> {
+                    System.out.print("Nome do Evento: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Data Início (AAAA-MM-DD): ");
+                    LocalDate inicio = LocalDate.parse(scanner.nextLine());
+                    System.out.print("Data Fim (AAAA-MM-DD): ");
+                    LocalDate fim = LocalDate.parse(scanner.nextLine());
+                    System.out.print("Preço por dia: ");
+                    double preco = scanner.nextDouble();
+                    System.out.print("Capacidade máxima: ");
+                    int capacidade = scanner.nextInt();
+                    scanner.nextLine();
+                    if (opcao == 2)
+                        sistema.cadastrarShow(nome, inicio, fim, preco, capacidade);
+                    else
+                        sistema.cadastrarCongresso(nome, inicio, fim, preco, capacidade);
+                }
+                case 4 -> sistema.listarEventos().forEach(System.out::println);
+                case 5 -> {
+                    System.out.print("Email do Cliente: ");
+                    String email = scanner.nextLine();
+                    System.out.print("Nome do Evento: ");
+                    String nomeEvento = scanner.nextLine();
+                    System.out.print("VIP (true/false): ");
+                    boolean vip = scanner.nextBoolean();
+                    scanner.nextLine();
+                    if (sistema.comprarIngresso(email, nomeEvento, vip))
+                        System.out.println("Ingresso comprado com sucesso!");
+                    else
+                        System.out.println("Falha na compra.");
+                }
+                case 6 -> {
+                    System.out.print("Email do Cliente: ");
+                    String email = scanner.nextLine();
+                    System.out.print("Nome do Evento: ");
+                    String nomeEvento = scanner.nextLine();
+                    if (sistema.utilizarIngresso(email, nomeEvento))
+                        System.out.println("Ingresso utilizado");
+                }
+                case 0 -> {
+                    System.out.print("Saindo.... ");
+            }
+		}
+	}while (opcao != 0);
+	}
+}

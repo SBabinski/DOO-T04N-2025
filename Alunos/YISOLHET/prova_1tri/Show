@@ -1,0 +1,17 @@
+package eventos;
+
+import java.time.LocalDate;
+
+public class Show extends Evento {
+
+	public Show(String nome, LocalDate dataInicio, LocalDate dataFim, double precoDiario, int capacidadeMaxima) {
+		super(nome, dataInicio, dataFim, precoDiario, capacidadeMaxima);
+		
+	}
+
+	@Override
+	protected String getNome() {
+		return null;
+	}
+
+}

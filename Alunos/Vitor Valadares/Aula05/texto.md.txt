@@ -1,0 +1,45 @@
+# Paradigmas de Programação Imperativo vs. Declarativo
+
+## Introdução
+Os paradigmas de programação influenciam diretamente a forma como desenvolvemos software. Dois paradigmas apresentados na aula do dia 20032025 foram
+
+1. Paradigma Imperativo Baseado em uma sequência de instruções que modificam o estado do programa. Linguagens como Java, C e Python seguem esse modelo.
+2. Paradigma Declarativo Especifica o que deve ser feito, sem detalhar como. Exemplos incluem Prolog e SQL.
+
+A seguir, veremos como esses paradigmas se aplicam comparando um código em Java e outro em Prolog.
+
+## Comparação de Código
+### Exemplo em Java (Imperativo)
+```java
+public class Fatorial {
+    public static int calcularFatorial(int n) {
+        int resultado = 1;
+        for (int i = 1; i = n; i++) {
+            resultado = i;
+        }
+        return resultado;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(calcularFatorial(5));  Saída 120
+    }
+}
+```
+Neste código, o cálculo do fatorial é feito de forma sequencial, com um laço `for` multiplicando os valores de `1` até `n`.
+
+### Exemplo em Prolog (Declarativo)
+```prolog
+fatorial(0,1).
+fatorial(N, Resultado) -
+    N  0,
+    N1 is N - 1,
+    fatorial(N1, R1),
+    Resultado is N  R1.
+% Consulta - fatorial(5, X). % X = 120
+```
+Aqui, o fatorial é definido como uma relação matemática. O Prolog usa recursão para calcular o resultado, sem a necessidade de um loop explícito.
+
+## Conclusão
+O paradigma imperativo, como no exemplo de Java, exige controle detalhado sobre o fluxo de execução. Já o paradigma declarativo, como o Prolog, foca mais na definição do problema, deixando que o interpretador encontre a solução.
+
+Cada abordagem tem suas vantagens o imperativo é útil para controle detalhado, enquanto o declarativo é mais intuitivo para resolver problemas matemáticos e lógicos.

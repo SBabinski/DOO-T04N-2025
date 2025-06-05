@@ -1,0 +1,34 @@
+package eventos;
+
+public class ingresso {
+	
+	    private Cliente cliente;
+	    private Evento evento;
+	    private boolean vip;
+	    private boolean utilizado;
+	    
+	    
+	    public void Ingresso (Cliente cliente, Evento evento, boolean vip, boolean utilizado) {
+	    	this.cliente = cliente;
+	    	this.evento = evento;
+	    	this.vip = vip;
+	    	this.utilizado = false;
+	    }
+	    
+	    public boolean isVip() {
+	        return vip;
+	    }
+
+	    public boolean isUtilizado() {
+	        return utilizado;
+	    }
+
+	    public void utilizar() {
+	        utilizado = true;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return cliente.getNome() + " - " + evento.getNome() + " - VIP: " + vip + " - Usado: " + utilizado;
+	    }
+	}
