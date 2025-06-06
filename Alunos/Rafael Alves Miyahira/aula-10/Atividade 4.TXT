@@ -1,0 +1,46 @@
+package faculdade;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+class Produto {
+    private String nome;
+    private double preco;
+
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " - R$ " + preco;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Produto> produtos = Arrays.asList(
+            new Produto("Teclado", 120.0),
+            new Produto("Mouse", 80.0),
+            new Produto("Monitor", 650.0),
+            new Produto("Cabo USB", 30.0)
+        );
+
+        List<Produto> filtrados = produtos.stream()
+                                          .filter(p -> p.getPreco() > 100.0)
+                                          .collect(Collectors.toList());
+
+        System.out.println("Produtos com preço acima de R$ 100,00:");
+        filtrados.forEach(System.out::println);
+    }
+}
