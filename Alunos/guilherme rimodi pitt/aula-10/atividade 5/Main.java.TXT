@@ -1,0 +1,36 @@
+package faculdade;
+
+import java.util.Arrays;
+import java.util.List;
+
+class Produto {
+    private String nome;
+    private double preco;
+
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Produto> produtos = Arrays.asList(
+            new Produto("Teclado", 120.0),
+            new Produto("Mouse", 80.0),
+            new Produto("Monitor", 650.0),
+            new Produto("Cabo USB", 30.0)
+        );
+
+        double somaTotal = produtos.stream()
+                                   .mapToDouble(Produto::getPreco)
+                                   .sum();
+
+        System.out.printf("Soma total dos produtos: R$ %.2f%n", somaTotal);
+    }
+}
+
