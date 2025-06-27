@@ -1,0 +1,36 @@
+package clima;
+
+import java.util.Scanner;
+
+public class Menu {
+    private Scanner scanner = new Scanner(System.in);
+
+    public void executar() {
+        System.out.println("===== CONSULTA DE CLIMA =====");
+
+        while (true) {
+            System.out.print("\nDigite o nome da cidade (ou 'sair' para encerrar): ");
+            String cidade = scanner.nextLine().trim();
+
+            if (cidade.equalsIgnoreCase("sair")) {
+                System.out.println("Encerrando...");
+                break;
+            }
+
+            Clima clima = ConsultaClimaAPI.buscarClimaPorCidade(cidade);
+
+            if (clima != null) {
+                System.out.println("\n--- Dados do Clima para " + cidade + " ---");
+                System.out.println("Temperatura atual: " + clima.getTemperaturaAtual() + "°C");
+                System.out.println("Temperatura máxima: " + clima.getTemperaturaMax() + "°C");
+                System.out.println("Temperatura mínima: " + clima.getTemperaturaMin() + "°C");
+                System.out.println("Condição do tempo: " + clima.getCondicao());
+                System.out.println("Umidade do ar: " + clima.getUmidade() + "%");
+                System.out.println("Precipitação: " + clima.getPrecipitacao() + " mm");
+                System.out.println("Vento: " + clima.getVentoVelocidade() + " km/h - " + clima.getVentoDirecao());
+            } else {
+                System.out.println("Não foi possível obter os dados da cidade informada. ");
+            }
+        }
+    }
+}
