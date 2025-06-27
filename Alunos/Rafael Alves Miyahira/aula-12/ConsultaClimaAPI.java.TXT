@@ -1,0 +1,77 @@
+package clima;
+
+import com.google.gson.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+public class ConsultaClimaAPI {
+    private static final String API_KEY = "ELYKXKAHJ9N43VXYR5F6GN7DZ";
+
+    public static Clima buscarClimaPorCidade(String cidade) {
+        try {
+            String cidadeCodificada = URLEncoder.encode(cidade, "UTF-8");
+            String urlStr = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
+                    + cidadeCodificada
+                    + "/today?unitGroup=metric&include=current&key=" + API_KEY;
+
+            URL url = new URL(urlStr);
+            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+            conexao.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
+            StringBuilder resposta = new StringBuilder();
+            String linha;
+            while ((linha = in.readLine()) != null) {
+                resposta.append(linha);
+            }
+            in.close();
+
+            JsonObject json = JsonParser.parseString(resposta.toString()).getAsJsonObject();
+
+            if (!json.has("currentConditions")) {
+                System.out.println("Erro: dados atuais não encontrados.");
+                return null;
+            }
+
+            JsonObject current = json.getAsJsonObject("currentConditions");
+            JsonArray days = json.getAsJsonArray("days");
+            JsonObject dia = days.size() > 0 ? days.get(0).getAsJsonObject() : null;
+
+            if (current == null || dia == null) {
+                System.out.println("Erro: informações de clima incompletas.");
+                return null;
+            }
+
+            double temperaturaAtual = getDoubleSafe(current, "temp");
+            double temperaturaMax = getDoubleSafe(dia, "tempmax");
+            double temperaturaMin = getDoubleSafe(dia, "tempmin");
+            int umidade = getIntSafe(current, "humidity");
+            String condicao = getStringSafe(current, "conditions");
+            double precipitacao = getDoubleSafe(current, "precip");
+            double ventoVelocidade = getDoubleSafe(current, "windspeed");
+            String ventoDirecao = getStringSafe(current, "winddir");
+
+            return new Clima(temperaturaAtual, temperaturaMax, temperaturaMin,
+                    umidade, condicao, precipitacao, ventoVelocidade, ventoDirecao);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar clima: " + e.getMessage());
+            return null;
+        }
+    }
+
+    private static double getDoubleSafe(JsonObject obj, String key) {
+        return obj.has(key) && !obj.get(key).isJsonNull() ? obj.get(key).getAsDouble() : 0.0;
+    }
+
+    private static int getIntSafe(JsonObject obj, String key) {
+        return obj.has(key) && !obj.get(key).isJsonNull() ? obj.get(key).getAsInt() : 0;
+    }
+
+    private static String getStringSafe(JsonObject obj, String key) {
+        return obj.has(key) && !obj.get(key).isJsonNull() ? obj.get(key).getAsString() : "Não informado";
+    }
+}
